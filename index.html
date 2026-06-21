@@ -1,1013 +1,997 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Growve GFX Bible</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === VARIABLES & PALETTE === */
+        :root {
+            --color-primary: #1B4332;
+            --color-secondary: #40916C;
+            --color-accent: #74C69D;
+            --color-accent-light: #B7E4C7;
+            --color-bg: #F8FAF9;
+            --color-surface: #FFFFFF;
+            --color-text: #1A1A2E;
+            --color-text-secondary: #4A5568;
+            --color-text-muted: #718096;
+            --color-border: #E2E8F0;
+            
+            --font-head: 'Sora', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+
+        /* === TYPOGRAPHY === */
+        h1, h2, h3 {
+            font-family: var(--font-head);
+            color: var(--color-text);
+        }
+
+        h1 {
+            font-weight: 700;
+            font-size: 54px;
+            color: var(--color-surface);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        h2 {
+            font-weight: 600;
+            font-size: 38px;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        h3 {
+            font-weight: 600;
+            font-size: 18px; /* Specific to cards per prompt */
+            color: var(--color-text);
+        }
+
+        .label {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* === NAVBAR === */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 64px;
+            background-color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
+            font-family: var(--font-head);
+            font-weight: 700;
+            color: var(--color-surface);
+            font-size: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-badge {
+            background-color: var(--color-accent-light);
+            color: var(--color-primary);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--color-surface);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--color-accent);
+            border-radius: 2px;
+        }
+
+        /* === HERO SECTION === */
+        .hero {
+            background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            padding: 100px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+            max-width: 600px;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 18px 24px 18px 56px;
+            border-radius: 12px;
+            border: none;
+            font-family: var(--font-body);
+            font-size: 16px;
+            background-color: var(--color-surface);
+            color: var(--color-text);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+
+        .search-container input::placeholder {
+            color: var(--color-text-muted);
+        }
+
+        .search-container input:focus {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 0 2px var(--color-accent);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--color-text-muted);
+        }
+
+        /* === SECTIONS === */
+        section {
+            padding: 80px 20px;
+        }
+
+        /* Background alternation */
+        section:nth-of-type(odd) {
+            background-color: var(--color-bg);
+        }
+        section:nth-of-type(even) {
+            background-color: var(--color-surface);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-desc {
+            color: var(--color-text-secondary);
+            font-size: 18px;
+            margin-bottom: 48px;
+            max-width: 700px;
+        }
+
+        /* === GRID & CARDS === */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+            border-color: var(--color-accent);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background-color: var(--color-accent-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .card p {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-top: 8px;
+            line-height: 1.5;
+            flex-grow: 1; /* Pushes the badge to the bottom */
+        }
+
+        .card-badge {
+            display: inline-block;
+            background-color: var(--color-accent-light);
+            color: var(--color-primary);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 100px;
+            margin-top: 24px;
+            width: fit-content;
+        }
+
+        /* === FOOTER === */
+        footer {
+            background-color: var(--color-primary);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--color-surface);
+        }
+
+        footer p.main {
+            font-family: var(--font-head);
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        footer p.muted {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 1024px) {
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 32px; }
+            h2 { font-size: 26px; }
+            .hero { padding: 60px 20px; }
+            
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                padding: 0 20px;
+            }
+            .nav-links {
+                gap: 16px;
+            }
+            .nav-links a {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none; /* Hidden under 480px per prompt */
+            }
+            .card {
+                padding: 20px;
+            }
+        }
+        
+        /* === NEW AI STYLES (GEMINI API) === */
+        .ai-search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-search-btn:hover {
+            background: var(--color-secondary);
+        }
+
+        .ai-result-box {
+            display: none;
+            background: var(--color-surface);
+            color: var(--color-text);
+            text-align: left;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 16px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 700px;
+            border-left: 4px solid var(--color-accent);
+            line-height: 1.6;
+        }
+
+        .ai-result-box.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .ai-loading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+
+        .spinner {
+            width: 20px; 
+            height: 20px;
+            border: 3px solid var(--color-border);
+            border-top-color: var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(-10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* AI Markdown Styles */
+        .ai-result-box p { margin-bottom: 12px; }
+        .ai-result-box p:last-child { margin-bottom: 0; }
+        .ai-result-box strong { color: var(--color-primary); }
+        .ai-result-box ul { margin-left: 20px; margin-bottom: 12px; }
+        .ai-result-box li { margin-bottom: 4px; }
+
+        /* Fab & Modal Prompt Generator */
+        .fab-ai {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--color-primary);
+            color: white;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: transform 0.2s, background 0.2s;
+            border: none;
+        }
+        
+        .fab-ai:hover {
+            transform: scale(1.05) translateY(-4px);
+            background: var(--color-secondary);
+        }
+
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--color-surface);
+            padding: 32px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-text-muted);
+        }
+
+        .modal h3 { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        
+        .modal textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            resize: none;
+            margin-bottom: 16px;
+            outline: none;
+        }
+        .modal textarea:focus { border-color: var(--color-accent); }
+
+        .modal-btn {
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            font-size: 15px;
+            font-family: var(--font-body);
+        }
+        .modal-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+        .modal-result {
+            margin-top: 16px;
+            background: var(--color-bg);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 13px;
+            display: none;
+            white-space: pre-wrap;
+            border: 1px solid var(--color-border);
+            position: relative;
+            color: var(--color-text);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: var(--color-accent-light);
+            color: var(--color-primary);
+            border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Growve GFX Bible&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === VARIABLES &amp; PALETTE === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>:root {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-primary: #1B4332;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-secondary: #40916C;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-accent: #74C69D;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-accent-light: #B7E4C7;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-bg: #F8FAF9;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-surface: #FFFFFF;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-text: #1A1A2E;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-text-secondary: #4A5568;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-text-muted: #718096;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--color-border: #E2E8F0;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>--font-head: 'Sora', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>--font-body: 'Inter', sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === RESET &amp; BASE === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>* {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-sizing: border-box;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>html {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>scroll-behavior: smooth;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-bg);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 17px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 400;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.7;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === TYPOGRAPHY === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1, h2, h3 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-head);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 54px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.2;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>h2 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 38px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>h3 {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 18px; /* Specific to cards per prompt */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.label {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>letter-spacing: 0.08em;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === NAVBAR === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>nav {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: sticky;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>z-index: 100;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 64px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: space-between;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 0 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-brand {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-logo {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-head);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 700;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>letter-spacing: 0.02em;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-badge {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-accent-light);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 11px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 4px 10px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 6px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-transform: uppercase;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>letter-spacing: 0.05em;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-links {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-links a {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: rgba(255, 255, 255, 0.8);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: color 0.2s ease;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-links a:hover, .nav-links a.active {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.nav-links a.active::after {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>content: '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>bottom: -6px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>left: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-accent);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === HERO SECTION === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.hero {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: linear-gradient(180deg, var(--color-primary) 0%, var(--color-secondary) 100%);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 100px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.hero-subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: rgba(255, 255, 255, 0.8);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 40px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 600px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.search-container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 560px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.search-container input {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 18px 24px 18px 56px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: box-shadow 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.search-container input::placeholder {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text-muted);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.search-container input:focus {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25), 0 0 0 2px var(--color-accent);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.search-icon {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>left: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-50%);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text-muted);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === SECTIONS === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 80px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Background alternation */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section:nth-of-type(odd) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-bg);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>section:nth-of-type(even) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.section-container {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 1200px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0 auto;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.section-desc {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 18px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 48px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 700px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === GRID &amp; CARDS === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card-grid {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: grid;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>grid-template-columns: repeat(4, 1fr);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--color-border);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 28px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-decoration: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-direction: column;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-4px);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-color: var(--color-accent);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card-icon {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 48px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 48px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-accent-light);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card p {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.5;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>flex-grow: 1; /* Pushes the badge to the bottom */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card-badge {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: inline-block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-accent-light);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 6px 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 100px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: fit-content;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === FOOTER === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>footer {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background-color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 40px 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>footer p.main {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-head);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>footer p.muted {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: rgba(255, 255, 255, 0.6);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === RESPONSIVE === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 1024px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.card-grid {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>grid-template-columns: repeat(3, 1fr);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 900px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.card-grid {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>grid-template-columns: repeat(2, 1fr);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 768px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>h1 { font-size: 32px; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>h2 { font-size: 26px; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.hero { padding: 60px 20px; }</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>.card-grid {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>grid-template-columns: 1fr;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>nav {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>padding: 0 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.nav-links {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>gap: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.nav-links a {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@media (max-width: 480px) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.nav-links {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>display: none; /* Hidden under 480px per prompt */</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>.card {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* === NEW AI STYLES (GEMINI API) === */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-search-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>right: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-50%);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 10px 18px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 500;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: background 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-search-btn:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>text-align: left;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 12px 32px rgba(0,0,0,0.2);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 700px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-left: 4px solid var(--color-accent);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>line-height: 1.6;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box.active {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>animation: fadeIn 0.3s ease;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-loading {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>gap: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-style: italic;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.spinner {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 20px;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 3px solid var(--color-border);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-top-color: var(--color-accent);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>animation: spin 1s linear infinite;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes spin {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>to { transform: rotate(360deg); }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn {<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>from { opacity: 0; transform: translateY(-10px); }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>to { opacity: 1; transform: translateY(0); }<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* AI Markdown Styles */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box p { margin-bottom: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box p:last-child { margin-bottom: 0; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box strong { color: var(--color-primary); }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box ul { margin-left: 20px; margin-bottom: 12px; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.ai-result-box li { margin-bottom: 4px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Fab &amp; Modal Prompt Generator */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.fab-ai {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>bottom: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>right: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 64px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 64px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 50%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 28px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 8px 24px rgba(0,0,0,0.2);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>z-index: 1000;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transition: transform 0.2s, background 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.fab-ai:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: scale(1.05) translateY(-4px);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: fixed;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 0; left: 0; right: 0; bottom: 0;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: rgba(0,0,0,0.5);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>z-index: 2000;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>align-items: center;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>justify-content: center;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-overlay.active { display: flex; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-surface);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 32px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 90%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>max-width: 500px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 24px 48px rgba(0,0,0,0.2);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-close {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 16px; right: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: none; border: none; font-size: 24px; cursor: pointer; color: var(--color-text-muted);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal h3 { margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal textarea {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>height: 100px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--color-border);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>resize: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-bottom: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>outline: none;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal textarea:focus { border-color: var(--color-accent); }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-secondary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 12px 24px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: flex; justify-content: center; align-items: center; gap: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: var(--font-body);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-btn:disabled { opacity: 0.7; cursor: not-allowed; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.modal-result {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin-top: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-bg);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>padding: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-family: monospace;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-size: 13px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>white-space: pre-wrap;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: 1px solid var(--color-border);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: relative;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-text);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>.copy-btn {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>position: absolute;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>top: 8px; right: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>background: var(--color-accent-light);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>color: var(--color-primary);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>font-weight: 600;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- NAVIGATION --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;nav id="navbar"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="nav-brand"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="nav-logo"&gt;GROWVE&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="nav-badge"&gt;GFX Bible&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="nav-links"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#section-workflow" class="active"&gt;Workflow&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#section-design"&gt;Design&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;a href="#section-amazon"&gt;Amazon&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/nav&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- HERO SECTION --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;header class="hero"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;h1&gt;GFX Bible&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="hero-subtitle"&gt;Everything a Growve designer needs to know&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="search-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;circle cx="11" cy="11" r="8"&gt;&lt;/circle&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;line x1="21" y1="21" x2="16.65" y2="16.65"&gt;&lt;/line&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;input type="text" id="ai-search-input" placeholder="Ask a question about our processes (e.g., 'amazon mobile rules')..."&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="ai-search-btn" id="ai-search-btn"&gt;✨ Ask AI&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="ai-result-box" id="ai-result-box"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- AI results will appear here --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/header&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;main&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECTION 1 : WORKFLOW --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="section-workflow"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2&gt;📁 GFX Folder &amp; Workflow&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="section-desc"&gt;Everything about organization, files, and production tools.&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🗂️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Google Drive Organization&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Folder structure, naming conventions, access, and sharing.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Naming Conventions&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🏷️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Naming Conventions&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Naming rules for source files, exports, and deliverables.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Source Files Process&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📦&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Source Files &amp; Exports&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Export formats, sizes, resolutions, delivery process.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Templates Library&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📐&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Templates Library&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Organization and access to the templates library.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Adobe Workflow&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🎨&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Adobe Workflow&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Photoshop, Illustrator, Premiere workflow — best practices.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Automation &amp; Productivity&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🤖&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Automation &amp; AI Tools&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;AI prompts, tools, automated workflows to save time.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: CapCut Process&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🎬&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;CapCut Process&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;CapCut workflow: editing, exports, project organization.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Video Workflow&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECTION 2 : DESIGN STANDARDS --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="section-design"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2&gt;🎨 Creative &amp; Design Standards&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="section-desc"&gt;Quality standards, visual principles, and brand consistency.&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;⭐&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Design Quality &amp; Expectations&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;What makes a premium design at Growve. Strong vs weak examples.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Visual Hierarchy&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🚀&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Approach to a New Project&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Step-by-step creative process: brief → conception → delivery.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Template Creation Logic&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📊&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Visual Hierarchy &amp; Conversion&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Visual hierarchy principles to maximize impact and conversion.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Mobile-First&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📱&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Mobile-First Optimization&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Mobile design rules: sizes, readability, thumb zone.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Elementor Process&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🌐&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Website Creation — Elementor&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Web page creation process, components, guidelines.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: UX/UI Thinking&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🧠&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;UX/UI Thinking&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;UX logic, user journey, data-driven design decisions.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Brand Consistency&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🔏&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Brand Consistency&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Logo usage, typography, colors. Never deviate from the guidelines.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Design Quality&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SECTION 3 : AMAZON &amp; VIDEO --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="section-amazon"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="section-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2&gt;🛒 Amazon, Execution &amp; Video Workflow&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="section-desc"&gt;Amazon processes, visual production, and social video workflow.&lt;/p&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="card-grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📸&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Amazon Image Set Process&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Structure of an Amazon image set: main image, infographics, lifestyle.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: A+ Content&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🏆&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;A+ Content Structure&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;A+ modules, Amazon rules, dimensions, best practices.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Mobile Optimization Rules&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📲&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Mobile Optimization — Amazon&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;How customers view images on mobile. Critical rules.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Production Checklist&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;✅&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Production Checklist&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Checklist before delivery: resolution, naming, formats, client validation.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Common Mistakes&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;⚠️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Common Mistakes to Avoid&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;List of frequent errors and how to avoid them systematically.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Client-Specific Knowledge&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🗂️&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Client-Specific Knowledge&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Client files, examples, account-specific details.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Amazon Image Set&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;🎥&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Video Production Process&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Editing organization, project naming, review process.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: Reels &amp; TikTok&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="card-icon"&gt;📱&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3&gt;Reels / TikTok / Social Content&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p&gt;Best practices, formats, durations, hooks, narrative structure.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="card-badge"&gt;Linked to: CapCut Process&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/a&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/main&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- AI PROMPT GENERATOR (Modal) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button class="fab-ai" id="fab-ai" title="Generate an AI Prompt"&gt;✨&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="modal-overlay" id="prompt-modal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="modal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="modal-close" id="modal-close"&gt;&amp;times;&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;h3&gt;✨ Prompt Generator&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.5;"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>Describe your idea simply in English. The Growve AI will draft a professional and detailed Midjourney prompt.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;textarea id="prompt-input" placeholder="Ex: A green serum bottle on a wet rock, nature background, studio lighting..."&gt;&lt;/textarea&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;button class="modal-btn" id="generate-prompt-btn"&gt;Generate Prompt&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="modal-result" id="prompt-result"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;button class="copy-btn" onclick="copyPrompt()"&gt;Copy&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span id="prompt-output"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- FOOTER --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="main"&gt;Growve GFX Bible – Internal Use Only&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;p class="muted"&gt;© 2024 Growve — Internal reference document, do not distribute.&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- JS FOR ACTIVE NAV STATE &amp; AI --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>document.addEventListener('DOMContentLoaded', () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const sections = document.querySelectorAll('section');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const navLinks = document.querySelectorAll('.nav-links a');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Options for Intersection Observer</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const observerOptions = {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>root: null,</p>
-<p class="p1"><span class="Apple-converted-space">                </span>rootMargin: '-20% 0px -60% 0px', // Triggers when the section occupies the top of the screen</p>
-<p class="p1"><span class="Apple-converted-space">                </span>threshold: 0</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const observer = new IntersectionObserver((entries) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>entries.forEach(entry =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (entry.isIntersecting) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>const activeId = entry.target.id;</p>
-<p class="p2"><span class="Apple-converted-space">                        </span></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>// Remove active class from all links</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>navLinks.forEach(link =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>link.classList.remove('active');</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>if (link.getAttribute('href') === `#${activeId}`) {</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>link.classList.add('active');</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}, observerOptions);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// Observe all sections</p>
-<p class="p1"><span class="Apple-converted-space">            </span>sections.forEach(section =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>observer.observe(section);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// === GEMINI API INTEGRATION (LLM) ===</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// ==========================================</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>const apiKey = ""; // API key provided at runtime</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Fetch function with Exponential Backoff to handle errors and rate limits</p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function fetchWithRetry(url, options, retries = 5, delay = 1000) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>for (let i = 0; i &lt; retries; i++) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>const response = await fetch(url, options);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (!response.ok) {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>throw new Error(`HTTP error! status: ${response.status}`);</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>return await response.json();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>} catch (error) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (i === retries - 1) throw error;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>await new Promise(resolve =&gt; setTimeout(resolve, delay));</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>delay *= 2;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Mini Markdown parser to properly display AI-generated text</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function parseMarkdown(text) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let html = text.replace(/\*\*(.*?)\*\*/g, '&lt;strong&gt;$1&lt;/strong&gt;');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>html = html.replace(/\*(.*?)\*/g, '&lt;em&gt;$1&lt;/em&gt;');</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const lines = html.split('\n');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let result = '';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let inList = false;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>lines.forEach(line =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const trimmed = line.trim();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (!inList) { result += '&lt;ul&gt;'; inList = true; }</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>result += `&lt;li&gt;${trimmed.substring(2)}&lt;/li&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (inList) { result += '&lt;/ul&gt;'; inList = false; }</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>if (trimmed !== '') {</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>result += `&lt;p&gt;${trimmed}&lt;/p&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>});</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (inList) result += '&lt;/ul&gt;';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return result;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- FEATURE 1: GFX Assistant (Search bar) ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const searchInput = document.getElementById('ai-search-input');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const searchBtn = document.getElementById('ai-search-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const resultBox = document.getElementById('ai-result-box');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function handleAISearch() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const query = searchInput.value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (!query) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>resultBox.classList.add('active');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>resultBox.innerHTML = '&lt;div class="ai-loading"&gt;&lt;div class="spinner"&gt;&lt;/div&gt;&lt;span&gt;AI is consulting the GFX Bible...&lt;/span&gt;&lt;/div&gt;';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const systemPrompt = `You are the AI assistant of the "Growve GFX Bible", a knowledge base for graphic designers.<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>Answer designers' questions about workflows (Photoshop, Drive), design (visual hierarchy, mobile-first, typography),<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>and Amazon creation (images, A+ content). Be very concise, direct, professional, and solution-oriented.<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>Answer in English using simple Markdown formatting (bold, bullet points). Never say you are an AI, act like the Bible itself.`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const payload = {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>contents: [{ parts: [{ text: query }] }],</p>
-<p class="p1"><span class="Apple-converted-space">                </span>systemInstruction: { parts: [{ text: systemPrompt }] }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const data = await fetchWithRetry(apiUrl, {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>method: 'POST',</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>headers: { 'Content-Type': 'application/json' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>body: JSON.stringify(payload)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>const text = data.candidates?.[0]?.content?.parts?.[0]?.text;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (text) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>resultBox.innerHTML = parseMarkdown(text);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>resultBox.innerHTML = "&lt;p&gt;Sorry, I couldn't generate an answer.&lt;/p&gt;";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>resultBox.innerHTML = "&lt;p&gt;&lt;em&gt;Error connecting to the AI assistant. Please try again later.&lt;/em&gt;&lt;/p&gt;";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>searchBtn.addEventListener('click', handleAISearch);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>searchInput.addEventListener('keypress', (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (e.key === 'Enter') handleAISearch();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- FEATURE 2: Midjourney Prompt Generator ---</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const fabAi = document.getElementById('fab-ai');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const modalOverlay = document.getElementById('prompt-modal');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const modalClose = document.getElementById('modal-close');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const generatePromptBtn = document.getElementById('generate-prompt-btn');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const promptInput = document.getElementById('prompt-input');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const promptResultBox = document.getElementById('prompt-result');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const promptOutput = document.getElementById('prompt-output');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Modal Open / Close</p>
-<p class="p1"><span class="Apple-converted-space">        </span>fabAi.addEventListener('click', () =&gt; modalOverlay.classList.add('active'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modalClose.addEventListener('click', () =&gt; modalOverlay.classList.remove('active'));</p>
-<p class="p1"><span class="Apple-converted-space">        </span>modalOverlay.addEventListener('click', (e) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (e.target === modalOverlay) modalOverlay.classList.remove('active');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>async function generatePrompt() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const idea = promptInput.value.trim();</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (!idea) return;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>generatePromptBtn.innerHTML = '&lt;div class="spinner" style="width: 16px; height: 16px; border-width: 2px;"&gt;&lt;/div&gt; Creating prompt...';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>generatePromptBtn.disabled = true;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>promptResultBox.style.display = 'none';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const systemPrompt = `You are an expert in designing prompts for Midjourney, specializing in product photography and premium advertising design.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>The designer gives you a basic idea.<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>Generate an ultra-detailed and professional prompt in English.</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Structure your prompt like this: [High-quality main subject], [Environment/Setting], [Lighting (e.g., cinematic lighting, studio setup)], [Camera/Lens (e.g., 85mm lens, f/1.8, macro)], [Style/Render (e.g., photorealistic, 8k, highly detailed, octane render)], [Parameters (e.g., --ar 16:9 --v 6.0)].<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>Return STRICTLY ONLY the prompt text in English, no introductory sentence, no other explanation.`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const payload = {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>contents: [{ parts: [{ text: idea }] }],</p>
-<p class="p1"><span class="Apple-converted-space">                </span>systemInstruction: { parts: [{ text: systemPrompt }] }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const data = await fetchWithRetry(apiUrl, {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>method: 'POST',</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>headers: { 'Content-Type': 'application/json' },</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>body: JSON.stringify(payload)</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>const text = data.candidates?.[0]?.content?.parts?.[0]?.text;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (text) {</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>promptOutput.textContent = text.trim();</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>promptResultBox.style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} catch (error) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>promptOutput.textContent = "Error generating prompt.";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>promptResultBox.style.display = 'block';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} finally {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>generatePromptBtn.innerHTML = 'Generate Prompt';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>generatePromptBtn.disabled = false;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>generatePromptBtn.addEventListener('click', generatePrompt);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Function to copy the generated text (Compatible with the environment's iFrame)</p>
-<p class="p1"><span class="Apple-converted-space">        </span>window.copyPrompt = function() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const textToCopy = promptOutput.textContent;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Using a temporary textarea for document.execCommand('copy')</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const tempTextArea = document.createElement("textarea");</p>
-<p class="p1"><span class="Apple-converted-space">                </span>tempTextArea.value = textToCopy;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.body.appendChild(tempTextArea);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>tempTextArea.select();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.execCommand("copy");</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.body.removeChild(tempTextArea);</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>const btn = document.querySelector('.copy-btn');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>btn.textContent = "Copied!";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; btn.textContent = "Copy", 2000);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} catch (err) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>console.error("Copy failed", err);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>};</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="nav-brand">
+            <span class="nav-logo">GROWVE</span>
+            <span class="nav-badge">GFX Bible</span>
+        </div>
+        <div class="nav-links">
+            <a href="#section-workflow" class="active">Workflow</a>
+            <a href="#section-design">Design</a>
+            <a href="#section-amazon">Amazon</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <h1>GFX Bible</h1>
+        <p class="hero-subtitle">Everything a Growve designer needs to know</p>
+        
+        <div class="search-container">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="ai-search-input" placeholder="Ask a question about our processes (e.g., 'amazon mobile rules')...">
+            <button class="ai-search-btn" id="ai-search-btn">✨ Ask AI</button>
+        </div>
+
+        <div class="ai-result-box" id="ai-result-box">
+            <!-- AI results will appear here -->
+        </div>
+    </header>
+
+    <main>
+        <!-- SECTION 1 : WORKFLOW -->
+        <section id="section-workflow">
+            <div class="section-container">
+                <h2>📁 GFX Folder & Workflow</h2>
+                <p class="section-desc">Everything about organization, files, and production tools.</p>
+                
+                <div class="card-grid">
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🗂️</div>
+                        <h3>Google Drive Organization</h3>
+                        <p>Folder structure, naming conventions, access, and sharing.</p>
+                        <span class="card-badge">Linked to: Naming Conventions</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🏷️</div>
+                        <h3>Naming Conventions</h3>
+                        <p>Naming rules for source files, exports, and deliverables.</p>
+                        <span class="card-badge">Linked to: Source Files Process</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📦</div>
+                        <h3>Source Files & Exports</h3>
+                        <p>Export formats, sizes, resolutions, delivery process.</p>
+                        <span class="card-badge">Linked to: Templates Library</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📐</div>
+                        <h3>Templates Library</h3>
+                        <p>Organization and access to the templates library.</p>
+                        <span class="card-badge">Linked to: Adobe Workflow</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🎨</div>
+                        <h3>Adobe Workflow</h3>
+                        <p>Photoshop, Illustrator, Premiere workflow — best practices.</p>
+                        <span class="card-badge">Linked to: Automation & Productivity</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🤖</div>
+                        <h3>Automation & AI Tools</h3>
+                        <p>AI prompts, tools, automated workflows to save time.</p>
+                        <span class="card-badge">Linked to: CapCut Process</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🎬</div>
+                        <h3>CapCut Process</h3>
+                        <p>CapCut workflow: editing, exports, project organization.</p>
+                        <span class="card-badge">Linked to: Video Workflow</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2 : DESIGN STANDARDS -->
+        <section id="section-design">
+            <div class="section-container">
+                <h2>🎨 Creative & Design Standards</h2>
+                <p class="section-desc">Quality standards, visual principles, and brand consistency.</p>
+                
+                <div class="card-grid">
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">⭐</div>
+                        <h3>Design Quality & Expectations</h3>
+                        <p>What makes a premium design at Growve. Strong vs weak examples.</p>
+                        <span class="card-badge">Linked to: Visual Hierarchy</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🚀</div>
+                        <h3>Approach to a New Project</h3>
+                        <p>Step-by-step creative process: brief → conception → delivery.</p>
+                        <span class="card-badge">Linked to: Template Creation Logic</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📊</div>
+                        <h3>Visual Hierarchy & Conversion</h3>
+                        <p>Visual hierarchy principles to maximize impact and conversion.</p>
+                        <span class="card-badge">Linked to: Mobile-First</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📱</div>
+                        <h3>Mobile-First Optimization</h3>
+                        <p>Mobile design rules: sizes, readability, thumb zone.</p>
+                        <span class="card-badge">Linked to: Elementor Process</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🌐</div>
+                        <h3>Website Creation — Elementor</h3>
+                        <p>Web page creation process, components, guidelines.</p>
+                        <span class="card-badge">Linked to: UX/UI Thinking</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🧠</div>
+                        <h3>UX/UI Thinking</h3>
+                        <p>UX logic, user journey, data-driven design decisions.</p>
+                        <span class="card-badge">Linked to: Brand Consistency</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🔏</div>
+                        <h3>Brand Consistency</h3>
+                        <p>Logo usage, typography, colors. Never deviate from the guidelines.</p>
+                        <span class="card-badge">Linked to: Design Quality</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3 : AMAZON & VIDEO -->
+        <section id="section-amazon">
+            <div class="section-container">
+                <h2>🛒 Amazon, Execution & Video Workflow</h2>
+                <p class="section-desc">Amazon processes, visual production, and social video workflow.</p>
+                
+                <div class="card-grid">
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📸</div>
+                        <h3>Amazon Image Set Process</h3>
+                        <p>Structure of an Amazon image set: main image, infographics, lifestyle.</p>
+                        <span class="card-badge">Linked to: A+ Content</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🏆</div>
+                        <h3>A+ Content Structure</h3>
+                        <p>A+ modules, Amazon rules, dimensions, best practices.</p>
+                        <span class="card-badge">Linked to: Mobile Optimization Rules</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📲</div>
+                        <h3>Mobile Optimization — Amazon</h3>
+                        <p>How customers view images on mobile. Critical rules.</p>
+                        <span class="card-badge">Linked to: Production Checklist</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">✅</div>
+                        <h3>Production Checklist</h3>
+                        <p>Checklist before delivery: resolution, naming, formats, client validation.</p>
+                        <span class="card-badge">Linked to: Common Mistakes</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">⚠️</div>
+                        <h3>Common Mistakes to Avoid</h3>
+                        <p>List of frequent errors and how to avoid them systematically.</p>
+                        <span class="card-badge">Linked to: Client-Specific Knowledge</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🗂️</div>
+                        <h3>Client-Specific Knowledge</h3>
+                        <p>Client files, examples, account-specific details.</p>
+                        <span class="card-badge">Linked to: Amazon Image Set</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">🎥</div>
+                        <h3>Video Production Process</h3>
+                        <p>Editing organization, project naming, review process.</p>
+                        <span class="card-badge">Linked to: Reels & TikTok</span>
+                    </a>
+
+                    <a href="https://drive.google.com/" target="_blank" rel="noopener noreferrer" class="card">
+                        <div class="card-icon">📱</div>
+                        <h3>Reels / TikTok / Social Content</h3>
+                        <p>Best practices, formats, durations, hooks, narrative structure.</p>
+                        <span class="card-badge">Linked to: CapCut Process</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- AI PROMPT GENERATOR (Modal) -->
+    <button class="fab-ai" id="fab-ai" title="Generate an AI Prompt">✨</button>
+
+    <div class="modal-overlay" id="prompt-modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3>✨ Prompt Generator</h3>
+            <p style="font-size: 14px; color: var(--color-text-secondary); margin-bottom: 16px; line-height: 1.5;">
+                Describe your idea simply in English. The Growve AI will draft a professional and detailed Midjourney prompt.
+            </p>
+            <textarea id="prompt-input" placeholder="Ex: A green serum bottle on a wet rock, nature background, studio lighting..."></textarea>
+            <button class="modal-btn" id="generate-prompt-btn">Generate Prompt</button>
+            <div class="modal-result" id="prompt-result">
+                <button class="copy-btn" onclick="copyPrompt()">Copy</button>
+                <span id="prompt-output"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="main">Growve GFX Bible – Internal Use Only</p>
+        <p class="muted">© 2024 Growve — Internal reference document, do not distribute.</p>
+    </footer>
+
+    <!-- JS FOR ACTIVE NAV STATE & AI -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            // Options for Intersection Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -60% 0px', // Triggers when the section occupies the top of the screen
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.id;
+                        
+                        // Remove active class from all links
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${activeId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all sections
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // ==========================================
+        // === GEMINI API INTEGRATION (LLM) ===
+        // ==========================================
+        
+        const apiKey = ""; // API key provided at runtime
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        // Fetch function with Exponential Backoff to handle errors and rate limits
+        async function fetchWithRetry(url, options, retries = 5, delay = 1000) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return await response.json();
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2; 
+                }
+            }
+        }
+
+        // Mini Markdown parser to properly display AI-generated text
+        function parseMarkdown(text) {
+            let html = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            html = html.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            
+            const lines = html.split('\n');
+            let result = '';
+            let inList = false;
+            
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (trimmed.startsWith('* ') || trimmed.startsWith('- ')) {
+                    if (!inList) { result += '<ul>'; inList = true; }
+                    result += `<li>${trimmed.substring(2)}</li>`;
+                } else {
+                    if (inList) { result += '</ul>'; inList = false; }
+                    if (trimmed !== '') {
+                        result += `<p>${trimmed}</p>`;
+                    }
+                }
+            });
+            if (inList) result += '</ul>';
+            return result;
+        }
+
+        // --- FEATURE 1: GFX Assistant (Search bar) ---
+        const searchInput = document.getElementById('ai-search-input');
+        const searchBtn = document.getElementById('ai-search-btn');
+        const resultBox = document.getElementById('ai-result-box');
+
+        async function handleAISearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            resultBox.classList.add('active');
+            resultBox.innerHTML = '<div class="ai-loading"><div class="spinner"></div><span>AI is consulting the GFX Bible...</span></div>';
+
+            const systemPrompt = `You are the AI assistant of the "Growve GFX Bible", a knowledge base for graphic designers. 
+            Answer designers' questions about workflows (Photoshop, Drive), design (visual hierarchy, mobile-first, typography), 
+            and Amazon creation (images, A+ content). Be very concise, direct, professional, and solution-oriented. 
+            Answer in English using simple Markdown formatting (bold, bullet points). Never say you are an AI, act like the Bible itself.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: query }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    resultBox.innerHTML = parseMarkdown(text);
+                } else {
+                    resultBox.innerHTML = "<p>Sorry, I couldn't generate an answer.</p>";
+                }
+            } catch (error) {
+                resultBox.innerHTML = "<p><em>Error connecting to the AI assistant. Please try again later.</em></p>";
+            }
+        }
+
+        searchBtn.addEventListener('click', handleAISearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleAISearch();
+        });
+
+        // --- FEATURE 2: Midjourney Prompt Generator ---
+        const fabAi = document.getElementById('fab-ai');
+        const modalOverlay = document.getElementById('prompt-modal');
+        const modalClose = document.getElementById('modal-close');
+        const generatePromptBtn = document.getElementById('generate-prompt-btn');
+        const promptInput = document.getElementById('prompt-input');
+        const promptResultBox = document.getElementById('prompt-result');
+        const promptOutput = document.getElementById('prompt-output');
+
+        // Modal Open / Close
+        fabAi.addEventListener('click', () => modalOverlay.classList.add('active'));
+        modalClose.addEventListener('click', () => modalOverlay.classList.remove('active'));
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) modalOverlay.classList.remove('active');
+        });
+
+        async function generatePrompt() {
+            const idea = promptInput.value.trim();
+            if (!idea) return;
+
+            generatePromptBtn.innerHTML = '<div class="spinner" style="width: 16px; height: 16px; border-width: 2px;"></div> Creating prompt...';
+            generatePromptBtn.disabled = true;
+            promptResultBox.style.display = 'none';
+
+            const systemPrompt = `You are an expert in designing prompts for Midjourney, specializing in product photography and premium advertising design.
+            The designer gives you a basic idea. 
+            Generate an ultra-detailed and professional prompt in English.
+            Structure your prompt like this: [High-quality main subject], [Environment/Setting], [Lighting (e.g., cinematic lighting, studio setup)], [Camera/Lens (e.g., 85mm lens, f/1.8, macro)], [Style/Render (e.g., photorealistic, 8k, highly detailed, octane render)], [Parameters (e.g., --ar 16:9 --v 6.0)]. 
+            Return STRICTLY ONLY the prompt text in English, no introductory sentence, no other explanation.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: idea }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            try {
+                const data = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (text) {
+                    promptOutput.textContent = text.trim();
+                    promptResultBox.style.display = 'block';
+                }
+            } catch (error) {
+                promptOutput.textContent = "Error generating prompt.";
+                promptResultBox.style.display = 'block';
+            } finally {
+                generatePromptBtn.innerHTML = 'Generate Prompt';
+                generatePromptBtn.disabled = false;
+            }
+        }
+
+        generatePromptBtn.addEventListener('click', generatePrompt);
+
+        // Function to copy the generated text (Compatible with the environment's iFrame)
+        window.copyPrompt = function() {
+            const textToCopy = promptOutput.textContent;
+            
+            try {
+                // Using a temporary textarea for document.execCommand('copy')
+                const tempTextArea = document.createElement("textarea");
+                tempTextArea.value = textToCopy;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempTextArea);
+                
+                const btn = document.querySelector('.copy-btn');
+                btn.textContent = "Copied!";
+                setTimeout(() => btn.textContent = "Copy", 2000);
+            } catch (err) {
+                console.error("Copy failed", err);
+            }
+        };
+    </script>
 </body>
 </html>
